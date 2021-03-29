@@ -5,13 +5,16 @@ import App from './containers/App/App';
 import reportWebVitals from './reportWebVitals';
 import {LocalizationProvider} from "./context/LocalizationContext";
 import {BrowserRouter} from "react-router-dom";
+import {ProductsProvider} from "./context/ProductsContext";
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
+          <ProductsProvider>
           <LocalizationProvider>
           <App />
           </LocalizationProvider>
+          </ProductsProvider>
       </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

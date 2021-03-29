@@ -5,6 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 import './styles.scss';
 import Layout from "../../HOC/Layout/Layout";
 const Home = lazy(() => import('../../containers/Home/index'));
+const ProductsControl = lazy(() => import('../../containers/Products/index'));
+
 const App = () => {
   return (
       <div className="car-container">
@@ -18,6 +20,7 @@ const App = () => {
             >
             <Switch>
               <Route exact path="/" component={Home} />
+                <Route exact path="/products" component={ProductsControl} />
             </Switch>
             </Suspense>
         </Layout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_facebook</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Menu-Global---Desktop-1" transform="translate(-1090.000000, -8.000000)" fill="#791097">
+            <g id="Menu">
+                <g id="Menu-Superior" transform="translate(548.000000, 5.000000)">
+                    <g id="Social" transform="translate(514.000000, 3.000000)">
+                        <g id="1" transform="translate(28.000000, 0.000000)">
+                            <path d="M3.375,0 L14.625,0 C16.488961,0 18,1.51103897 18,3.375 L18,14.625 C18,16.488961 16.488961,18 14.625,18 L3.375,18 C1.51103897,18 0,16.488961 0,14.625 L0,3.375 C0,1.51103897 1.51103897,0 3.375,0 Z M12.5454545,12.3986014 L14.2424243,12.3986014 L14.7272727,9.99125876 L12.5454545,9.99125876 L12.5454545,8.38636364 C12.4303644,7.70645204 12.6104813,7.2186173 13.5151515,7.31643359 L14.7272727,7.31643359 L14.7272727,4.90909091 C14.5219572,4.97643138 13.8177322,4.90909091 13.030303,4.90909091 C11.2876953,4.90909091 10.1165457,6.06136797 10.1212121,8.11888115 L10.1212121,9.99125876 L8.18181818,9.99125876 L8.18181818,12.3986014 L10.1212121,12.3986014 L10.1212121,18 L12.5454545,18 L12.5454545,12.3986014 Z" id="icon_facebook"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

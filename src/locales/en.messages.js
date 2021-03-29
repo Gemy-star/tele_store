@@ -1,4 +1,23 @@
 export default {
+	validation:{
+		name : 'Please Enter Product Name' ,
+		details : 'Please Enter Details' ,
+		image: 'Please Upload An Image' ,
+		status: 'Please Select A Status',
+		allFields:'All fields are required to be filled'
+
+	},
+	startToday: {
+		formSection:{
+			firstLabel:'Product Name',
+			secondLabel:'Product Status',
+			thirdLabel:'Product Details',
+			fourthLabel:'Product Image',
+			sendBtn:'CREATE YOUR PRODUCT',
+			back:'BACK'
+
+		},
+	},
 	header: {
 		btn: 'العربيه',
 	},

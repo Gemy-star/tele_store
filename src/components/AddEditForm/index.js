@@ -3,26 +3,32 @@ import {FormattedMessage} from "react-intl";
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {LocalizationContext} from "../../context/LocalizationContext";
-import { useHistory } from "react-router-dom";
-
+import { useHistory , useParams } from "react-router-dom";
 import './_Add.scss';
+import {createProduct, getProductById, updateProduct} from "../../api/ProductsCRUD";
 
-const AddEditForm = ({name , details , image , status}) => {
+const AddEditForm = () => {
+    let { id } = useParams();
+    console.log("ID", id);
     const history = useHistory();
     const [locale , setLocale] = useContext(LocalizationContext);
     const [formIsValid , setFormIsValid] = useState(null);
-    const [status_new, setStatus_new] = useState(null);
-    const [image_new, setImage_new] = useState(null);
-    const [name_new, setName_new] = useState(null);
-    const [detials_new, setDetails_new] = useState(null);
-    const [error , setError] = useState({status:false , name:false , details:false , image:false})
+    const [status_new, setStatus_new] = useState('');
+    const [name_new, setName_new] = useState('');
+    const [detials_new, setDetails_new] = useState('');
+    const [item ,setItem] = useState({});
+    const [error , setError] = useState({status:false , name:false , details:false })
     useEffect(()=> {
-        if ( status_new && image_new && detials_new && name_new) {
-            setFormIsValid(true)
-        }else{
-            setFormIsValid(null)
-        }
-    } , [status_new , image_new , detials_new , name_new ]);
+       if (id) {
+           setFormIsValid(true);
+       }else{
+           if ( status_new &&  detials_new && name_new) {
+               setFormIsValid(true)
+           }else{
+               setFormIsValid(null)
+           }
+       }
+    } , [status_new , detials_new , name_new ]);
 
     const errorMessage = msg =>   {
         return (
@@ -39,29 +45,64 @@ const AddEditForm = ({name , details , image , status}) => {
         }
         const status = event.target.value;
         status ===    null ? setError({...error , status:true}):setError({...error , status:false})
-        setStatus_new(status);
-    };
-    const handleChangeImage = e =>  {
-        console.log(e.target.files[0])
-        setImage_new(e.target.files[0]);
-        !e.target.files[0] ? setError({...error , image:true}):setError({...error , image:false})
+        setStatus_new(status=== "0" ? false : true);
     };
     const handleSubmit = (event) =>  {
         event.preventDefault();
-        if(formIsValid && !error.name && !error.status) {
-            handlePostRequest({name:name_new , status:status_new , details:detials_new, image:image_new})
+        if(formIsValid && !error.name && !error.status && !error.details) {
+            handlePostRequest({name:name_new , status:status_new , description:detials_new})
         }else {
             setFormIsValid(false);
         }
     };
-    const handlePostRequest = (body) => {
-        const formData = new FormData();
-        formData.append("name" , body.name);
-        formData.append("description" , body.details);
-        formData.append("image" , body.image);
-        formData.append("status" , body.status);
-        console.log("Body",formData)
+    useEffect(()=> {
+        try {
+            getProductById(id).then(res=> {
+                console.log(res.data);
+                setItem(res?.data)
+            } , err => {})
+        }catch (e) {
+            console.log(e);
+        }
+    },[id])
+    const handlePostRequest = async  (body) => {
+        if (id) {
+            alert('update');
+            try {
+              await updateProduct(id,body).then((res) => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        history.push('/products');
+                    }
+                } , (err) => {
+                    console.log(err)
+                });
+            } catch (e) {
+                console.log(e);
+            }
+
+        }else {
+            alert('create');
+            try {
+                await createProduct(body).then((res) => {
+                    if (res.status == 200) {
+                        history.push('/products');
+                    }
+                } , (err) => {
+                  console.log(err);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
     };
+    useEffect(()=> {
+        if(item) {
+            setStatus_new(item.status);
+            setName_new(item.name);
+            setDetails_new(item.description);
+        }
+    },[item])
     const handleChangeName = event =>  {
         if(event.type===   "blur") {
             event.target.value ===   "" ? setError({...error , name:true}):setError({...error , name:false})
@@ -92,30 +133,13 @@ const AddEditForm = ({name , details , image , status}) => {
     return(
         <section>
             <div className="form_div">
-                <form autoComplete={false} onSubmit={(event) => {
-                    handleSubmit(event)
-                }}>
+                <form encType="multipart/form-data" method="POST">
                     {formIsValid == null || formIsValid == true ? null :
                         <div className="error_div" style={{justifyContent: 'flex-start'}}>
                             <p className="error_div_msg" style={{marginInline: '1rem'}}>
                                 <FormattedMessage id="validation.allFields"/>
                             </p>
                         </div>}
-                    <FormControl>
-                        <label className="form_div_label" htmlFor={"image"}>
-                            <FormattedMessage id="startToday.formSection.fourthLabel"/>
-                        </label>
-                        <input value={image ? image : null} type="file" name="image"
-                               style={error.image || formIsValid == false ? {
-                                   border: 'solid 1px #791097',
-                                   backgroundColor: 'rgba(236, 28, 36, 0.04)'
-                               } : null} className="form_div_ele" id="image" onChange={(e) => {
-                            handleChangeImage(e)
-                        }} onBlur={(e) => {
-                            handleChangeImage(e)
-                        }}/>
-                        {error.fullName ? errorMessage(<FormattedMessage id="validation.image"/>) : null}
-                    </FormControl>
                     <FormControl>
                         <label className="form_div_label" htmlFor={"status"}>
                             <FormattedMessage id="startToday.formSection.secondLabel"/>
@@ -125,10 +149,10 @@ const AddEditForm = ({name , details , image , status}) => {
                             backgroundColor: 'rgba(236, 28, 36, 0.04)'
                         } : null}
                                 className={locale == "en" ? "form_div_ele form_div_selectEn" : "form_div_ele form_div_selectAr"}
-                                id={"status"} value={status ? status : status_new} onChange={(event) => {
+                                id={"status"} defaultValue={status_new} onChange={(event) => {
                             handleChangeStatus(event)
                         }}>
-                            <option value="" disabled selected>
+                            <option disabled selected>
                                 {locale == "en" ? "SELECT A Status" : "إختار حالة"}
                             </option>
                             <option onClick={(e) => {
@@ -146,11 +170,11 @@ const AddEditForm = ({name , details , image , status}) => {
                         <label className="form_div_label" htmlFor={"name"}>
                             <FormattedMessage id="startToday.formSection.firstLabel"/>
                         </label>
-                        <input value={name ? name : name_new} type="text" name="name"
+                        <input value={name_new} type="text" name="name"
                                style={error.name || formIsValid == false ? {
                                    border: 'solid 1px #791097',
                                    backgroundColor: 'rgba(236, 28, 36, 0.04)'
-                               } : null} className="form_div_ele" id="full_name" onChange={(e) => {
+                               } : null} className="form_div_ele" id="name" onChange={(e) => {
                             handleChangeName(e)
                         }} onBlur={(e) => {
                             handleChangeName(e)
@@ -161,7 +185,7 @@ const AddEditForm = ({name , details , image , status}) => {
                         <label className="form_div_label" htmlFor={"details"}>
                             <FormattedMessage id="startToday.formSection.thirdLabel"/>
                         </label>
-                        <input value={details ? details : detials_new} type="text" name="details"
+                        <input value={detials_new} type="text" name="details"
                                style={error.details || formIsValid == false ? {
                                    border: 'solid 1px #791097',
                                    backgroundColor: 'rgba(236, 28, 36, 0.04)'
@@ -174,7 +198,7 @@ const AddEditForm = ({name , details , image , status}) => {
                     </FormControl>
                     <FormControl style={{display: 'inline-block'}}>
                         <button onClick={(e) => handleSubmit(e)} className="btn_confirm">
-                            <FormattedMessage id="startToday.formSection.sendBtn"/>
+                            {id > 0  ? <FormattedMessage id="startToday.formSection.editBtn"/>:<FormattedMessage id="startToday.formSection.sendBtn"/>}
                             <ArrowForwardIosIcon style={{
                                 color: '#ffffff',
                                 fontSize: 'small',

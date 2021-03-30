@@ -5,8 +5,7 @@ import {FormattedMessage} from "react-intl";
 import {ProductContext} from "../../context/ProductsContext";
 import Product from "../../components/product";
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import Modal from '@material-ui/core/Modal';
-import AddEditForm from "../../components/AddEditForm";
+
 
 const rand = () => {
     return Math.round(Math.random() * 20) - 10;
@@ -26,7 +25,6 @@ const getModalStyle =() =>  {
 const Products = props =>  {
     const history = useHistory();
     const [products , setProduct] = useContext(ProductContext)
-    const [modalStyle] = useState(getModalStyle);
 
 
 
@@ -43,7 +41,7 @@ const Products = props =>  {
                         (d) =>  {
                             return (
                                 <div key={d.id}>
-                                    <Product id={d.id} icon={d.imageData} subtitle={d.description} title={d.name}/>
+                                    <Product id={d.id}  subtitle={d.description} title={d.name}/>
 
                                 </div>
                             )

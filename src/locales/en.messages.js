@@ -14,6 +14,7 @@ export default {
 			thirdLabel:'Product Details',
 			fourthLabel:'Product Image',
 			sendBtn:'CREATE YOUR PRODUCT',
+			editBtn:'EDIT YOUR PRODUCT',
 			back:'BACK'
 
 		},

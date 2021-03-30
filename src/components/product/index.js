@@ -2,17 +2,25 @@ import React from "react";
 import './_product.scss';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
-const Product = ({id,icon , title , subtitle}) =>  {
+import {deleteProduct} from "../../api/ProductsCRUD";
+import {useHistory} from "react-router";
+const Product = ({id, title , subtitle}) =>  {
+    const history = useHistory();
     const handleEdit = () => {
-        console.log('id',id);
+       history.push(`/AddEdit/${id}`);
     };
     const handleDelete = () => {
-        console.log('id',id);
-    };
+         deleteProduct(id).then(res =>  {
+             if(res.status == 204){
+                 history.push('/products');
+             }
+            console.log('del',res);
+        }, err =>  {
+            console.log("Error" ,err)
+        })    };
     return(
         <div className="service_card">
             <div className="service_card_item">
-                {icon !== null ?<img src={icon} className="service_card_item_img"/> : <div></div>}
                 <div className="service_card_item_content">
                     <h3>{title}  </h3>
                     <p>{subtitle}</p>
@@ -20,8 +28,8 @@ const Product = ({id,icon , title , subtitle}) =>  {
                 </div>
             </div>
             <div className="service_card_control">
-                <CreateIcon className="service_card_control_edit" onClick={() => handleEdit()}/>
-                <DeleteIcon className="service_card_control_delete" onClick={() => handleDelete()}/>
+                <CreateIcon className="service_card_control_edit" onClick={() => handleEdit(id)}/>
+                <DeleteIcon className="service_card_control_delete" onClick={() => handleDelete(id)}/>
 
             </div>
 

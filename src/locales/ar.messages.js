@@ -32,6 +32,7 @@ export default {
 			thirdLabel:'الوصف',
 			fourthLabel:'الصورة',
 			sendBtn:'إضف منتجك',
+			editBtn:'تعديل منتجك',
 			back:'الرجوع'
 		},
 	},

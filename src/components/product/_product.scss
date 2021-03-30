@@ -1,19 +1,24 @@
 @import "../../Containers/App/_mixins.scss";
 @import "../../Containers/App/_variables.scss";
 
+.service_card:hover{
 
+    box-shadow: 0px 4px 4px 0px $btn_background;
+
+}
 .service_card {
   display: flex;
-  width: 22.5rem;
-  height: 15.438rem;
-  margin: 0 40px 0 0;
-  border-radius: 5px;
-  border: solid 1px #dddfe7;
+  width: auto;
+  height: auto;
+  margin: 0 0 5rem 2rem;
+  border-radius: 50px;
+  border: solid 1px $btn_background;
   background-color: #ffffff;
-  justify-content:space-around;
+  justify-content: space-around;
+  box-shadow: 0 4px 4px 0 $btn_background, 0 4px 4px 0 $btn_background;
   @include breakpoint-down(medium){
-    width:22.8rem;
-    height:15.5rem;
+    width:auto;
+    height:auto;
     margin: 0 auto;
     margin-top: 1.8rem;
   }
@@ -56,6 +61,7 @@
         margin-inline-start: 1.8rem;
       }
       h3{
+        margin-inline: 0.7rem;
         display: flex;
         margin-top: 1rem;
         align-self: flex-start;

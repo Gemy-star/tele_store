@@ -9,7 +9,6 @@ const ProductsProvider = ({ children }) => {
     useEffect(()=> {
         getAllProducts().then(res =>  {
             setProducts(res?.data)
-            console.log('RES',res);
         }, err =>  {
             console.log("Error")
         })

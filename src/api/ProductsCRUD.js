@@ -1,24 +1,25 @@
-import axiosInstance from '../axios/axiosInstance';
-
+import axiosInstance, {baseURL} from '../axios/axiosInstance';
+const API_URL = 'api/products';
 
 export const getAllProducts = () =>   {
-    return axiosInstance.get('api/products/')
+    return axiosInstance.get(API_URL)
 }
 export const getProductById = (id) =>   {
-    return axiosInstance.get(`api/products/${id}`)
+    return axiosInstance.get(`${API_URL}/${id}`)
 }
 
 export const createProduct = (body) =>   {
-
-    return axiosInstance.post('api/products/',{ ...body})
+console.log("SARA",body);
+      return axiosInstance.post(API_URL, body )
 }
+
 export const updateProduct = (id,body) =>   {
 
-    return axiosInstance.put(`api/products/${id}`,{ ...body})
+    return axiosInstance.put(`${API_URL}/${id}`,body)
 }
 
 export const deleteProduct = (id) =>   {
 
-    return axiosInstance.delete(`api/products/${id}`)
+    return axiosInstance.delete(`${API_URL}/${id}`)
 }
 

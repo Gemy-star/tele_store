@@ -43,7 +43,7 @@ const Products = props =>  {
                         (d) =>  {
                             return (
                                 <div key={d.id}>
-                                    <Product icon={d.imageData} subtitle={d.description} title={d.name}/>
+                                    <Product id={d.id} icon={d.imageData} subtitle={d.description} title={d.name}/>
 
                                 </div>
                             )

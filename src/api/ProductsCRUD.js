@@ -12,3 +12,13 @@ export const createProduct = (body) =>   {
 
     return axiosInstance.post('api/products/',{ ...body})
 }
+export const updateProduct = (id,body) =>   {
+
+    return axiosInstance.put(`api/products/${id}`,{ ...body})
+}
+
+export const deleteProduct = (id) =>   {
+
+    return axiosInstance.delete(`api/products/${id}`)
+}
+

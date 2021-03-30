@@ -41,11 +41,10 @@ const AddEditForm = ({name , details , image , status}) => {
         status ===    null ? setError({...error , status:true}):setError({...error , status:false})
         setStatus_new(status);
     };
-    const handleChangeImage = event =>  {
-        const image = event.target.value;
-        setImage_new(image);
-        !image ? setError({...error , image:true}):setError({...error , image:false})
-        console.log("ITEM",image)
+    const handleChangeImage = e =>  {
+        console.log(e.target.files[0])
+        setImage_new(e.target.files[0]);
+        !e.target.files[0] ? setError({...error , image:true}):setError({...error , image:false})
     };
     const handleSubmit = (event) =>  {
         event.preventDefault();
@@ -56,7 +55,12 @@ const AddEditForm = ({name , details , image , status}) => {
         }
     };
     const handlePostRequest = (body) => {
-       console.log("Body",body)
+        const formData = new FormData();
+        formData.append("name" , body.name);
+        formData.append("description" , body.details);
+        formData.append("image" , body.image);
+        formData.append("status" , body.status);
+        console.log("Body",formData)
     };
     const handleChangeName = event =>  {
         if(event.type===   "blur") {
@@ -101,7 +105,7 @@ const AddEditForm = ({name , details , image , status}) => {
                         <label className="form_div_label" htmlFor={"image"}>
                             <FormattedMessage id="startToday.formSection.fourthLabel"/>
                         </label>
-                        <input value={image ? image : image_new} type="file" name="image"
+                        <input value={image ? image : null} type="file" name="image"
                                style={error.image || formIsValid == false ? {
                                    border: 'solid 1px #791097',
                                    backgroundColor: 'rgba(236, 28, 36, 0.04)'
@@ -151,7 +155,7 @@ const AddEditForm = ({name , details , image , status}) => {
                         }} onBlur={(e) => {
                             handleChangeName(e)
                         }}/>
-                        {error.fullName ? errorMessage(<FormattedMessage id="validation.name"/>) : null}
+                        {error.name ? errorMessage(<FormattedMessage id="validation.name"/>) : null}
                     </FormControl>
                     <FormControl>
                         <label className="form_div_label" htmlFor={"details"}>

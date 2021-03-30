@@ -2,8 +2,13 @@ import React from "react";
 import './_product.scss';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
-const Product = ({icon , title , subtitle}) =>  {
-
+const Product = ({id,icon , title , subtitle}) =>  {
+    const handleEdit = () => {
+        console.log('id',id);
+    };
+    const handleDelete = () => {
+        console.log('id',id);
+    };
     return(
         <div className="service_card">
             <div className="service_card_item">
@@ -15,8 +20,8 @@ const Product = ({icon , title , subtitle}) =>  {
                 </div>
             </div>
             <div className="service_card_control">
-                <CreateIcon className="service_card_control_edit" />
-                <DeleteIcon className="service_card_control_delete"/>
+                <CreateIcon className="service_card_control_edit" onClick={() => handleEdit()}/>
+                <DeleteIcon className="service_card_control_delete" onClick={() => handleDelete()}/>
 
             </div>
 

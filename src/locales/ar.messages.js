@@ -13,7 +13,9 @@ export default {
 		details : 'إدخل الوصف' ,
 		image: 'إختار الصورة' ,
 		status: 'إختار حالة',
-		allFields:'يجب ملء جميع الحقول\n'
+		allFields:'يجب ملء جميع الحقول\n',
+		username:'إدخل اسم المستخدم',
+		password:'إدخل كلمة المرور'
 	},
 	services:{
 		headline:'لماذا Teleperformance؟\n' ,
@@ -25,6 +27,11 @@ export default {
 		subtitle:'نحن ندمج التكنولوجيا الفائقة مع اللمسة البشرية\n',
 		social:'تابعنا على مواقع التواصل الأجتماعى\n'
 	},
+	login:{
+		login:'تسجيل الدخول',
+		username:'إسم المستخدم',
+		password:'كلمة المرور'
+	},
 	startToday: {
 		formSection:{
 			firstLabel:'لأسم',
@@ -33,7 +40,8 @@ export default {
 			fourthLabel:'الصورة',
 			sendBtn:'إضف منتجك',
 			editBtn:'تعديل منتجك',
-			back:'الرجوع'
+			back:'الرجوع',
+			login:'الدخول'
 		},
 	},
 };

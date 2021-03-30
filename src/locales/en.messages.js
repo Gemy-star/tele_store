@@ -4,8 +4,9 @@ export default {
 		details : 'Please Enter Details' ,
 		image: 'Please Upload An Image' ,
 		status: 'Please Select A Status',
-		allFields:'All fields are required to be filled'
-
+		allFields:'All fields are required to be filled',
+		username:'Please Enter UserName',
+		password:'Please Enter Password'
 	},
 	startToday: {
 		formSection:{
@@ -15,9 +16,15 @@ export default {
 			fourthLabel:'Product Image',
 			sendBtn:'CREATE YOUR PRODUCT',
 			editBtn:'EDIT YOUR PRODUCT',
-			back:'BACK'
+			back:'BACK',
+			login:'Login'
 
 		},
+	},
+	login:{
+		login:'Sign In',
+		username:'Username',
+		password:'Password'
 	},
 	header: {
 		btn: 'العربيه',

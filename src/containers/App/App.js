@@ -6,6 +6,7 @@ import './styles.scss';
 import Layout from "../../HOC/Layout/Layout";
 import {Add} from "@material-ui/icons";
 const Home = lazy(() => import('../../containers/Home/index'));
+const Login = lazy(() => import('../../containers/Login/index'));
 const ProductsControl = lazy(() => import('../../containers/Products/index'));
 const AddEdit = lazy(() => import('../../components/AddEditForm/index'));
 
@@ -23,7 +24,8 @@ const App = () => {
             <Switch>
               <Route exact path="/" component={Home} />
                 <Route exact path="/products" component={ProductsControl}/>
-                    <Route exact path="/AddEdit" component={AddEdit} />
+                <Route exact path="/Login" component={Login}/>
+                <Route exact path="/AddEdit" component={AddEdit} />
                 <Route exact path="/AddEdit/:id" component={AddEdit} />
 
             </Switch>

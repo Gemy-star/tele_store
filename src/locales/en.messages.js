@@ -6,7 +6,8 @@ export default {
 		status: 'Please Select A Status',
 		allFields:'All fields are required to be filled',
 		username:'Please Enter UserName',
-		password:'Please Enter Password'
+		password:'Please Enter Password' ,
+		email:'Please Enter Email'
 	},
 	startToday: {
 		formSection:{
@@ -22,11 +23,13 @@ export default {
 		},
 	},
 	login:{
+		register:'REGISTER' ,
 		login:'Sign In',
 		username:'Username',
 		password:'Password',
 		error:'Username Or Password is not correct',
-		welcome:'WELCOME'
+		welcome:'WELCOME' ,
+		email:'Email Address'
 	},
 	header: {
 		btn: 'العربيه',

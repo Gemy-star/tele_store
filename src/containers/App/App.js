@@ -10,6 +10,8 @@ const Login = lazy(() => import('../../containers/Login/index'));
 const ProductsControl = lazy(() => import('../../containers/Products/index'));
 const AddEdit = lazy(() => import('../../components/AddEditForm/index'));
 
+const RegisterPage = lazy(() => import('../../containers/Register/index'));
+
 const App = () => {
   return (
       <div className="car-container">
@@ -27,6 +29,7 @@ const App = () => {
                 <Route exact path="/Login" component={Login}/>
                 <Route exact path="/AddEdit" component={AddEdit} />
                 <Route exact path="/AddEdit/:id" component={AddEdit} />
+                <Route exact path="/Register" component={RegisterPage}/>
 
             </Switch>
             </Suspense>

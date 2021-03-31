@@ -2,20 +2,21 @@ import React, {useState, useEffect, useContext} from 'react';
 import {FormattedMessage} from "react-intl";
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import './_loginForm.scss';
+import './_registerform.scss';
 import {LocalizationContext} from "../../context/LocalizationContext";
 import {useHistory} from "react-router";
-import {login} from "../../api/LoginApi";
+import { register} from "../../api/LoginApi";
 import {UserContext} from "../../context/UserContext";
 import { toast } from 'react-toastify';
 
 
-const LoginForm = props => {
+const RegisterForm = props => {
     const [user, setUser] = useContext(UserContext);
     const history = useHistory();
-    const [error, setError] = useState({username: false, password: false})
+    const [error, setError] = useState({username: false, password: false, email:false})
     const [password, setPassword] = useState('');
-    const [name, setName] = useState(null);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [formIsValid, setFormIsValid] = useState(null);
     const [locale, setLocale] = useContext(LocalizationContext)
     useEffect(() => {
@@ -37,34 +38,43 @@ const LoginForm = props => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (formIsValid && !error.username && !error.password) {
-            handlePostRequest({username: name, password: password})
+        if (formIsValid && !error.username && !error.password && !error.email) {
+            handlePostRequest({username: name, password: password , email:email})
         } else {
             setFormIsValid(false);
         }
     };
     const handlePostRequest = (body) => {
-       login(body).then(res => {
-           if (res?.status == 200) {
-                   const user = {username:body.username , token:res?.data?.token};
-                   setUser(user);
-                   localStorage.setItem('token' , res?.data?.token)
-               toast.success(locale=="en" ? "Sucess" : "نجحت", {
-                   position: toast.POSITION.TOP_CENTER
-               });
-               console.log("Login",res);
-                   history.push('/products');
-           }else {
-               console.log(res);
 
-               toast.error(locale=="en" ? "Error" : "خطأ", {
-                   position: toast.POSITION.TOP_LEFT
-               });
-           }
-       } , err => {
-           console.log(err);
-       })
+        register(body).then(res => {
+            if (res?.status == 200 ) {
+                history.push('/Login');
+                toast.success(locale=="en" ? "Sucess" : "نجحت", {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }else {
+                toast.error(locale=="en" ? "Error" : "خطأ", {
+                    position: toast.POSITION.TOP_LEFT
+                });
+            }
+
+        } , err => {
+            console.log(err);
+        })
     };
+    const handleChangeUserEmail = event => {
+        const emailaddress = event.target.value;
+
+        if (emailaddress === "" || emailaddress === null || /^\d+$/.test(emailaddress)) {
+            setError({...error, email: true})
+            setFormIsValid(false)
+
+        } else {
+            setError({...error, email: false})
+        }
+        setEmail(emailaddress);
+    };
+
     const handleChangeUserName = event => {
         const username = event.target.value;
 
@@ -100,7 +110,7 @@ const LoginForm = props => {
                             <FormattedMessage id="validation.allFields"/>
                         </p>
                     </div>}
-                <h4><FormattedMessage id="login.login"/></h4>
+                <h4><FormattedMessage id="login.register"/></h4>
                 <FormControl>
                     <label className="form_div_label" htmlFor={"car_model"}>
                         <FormattedMessage id="login.username"/>
@@ -115,6 +125,21 @@ const LoginForm = props => {
                     }}/>
                     {error.username ? errorMessage(<FormattedMessage id="validation.username"/>) : null}
                 </FormControl>
+                <FormControl>
+                    <label className="form_div_label" htmlFor={"email"}>
+                        <FormattedMessage id="login.email"/>
+                    </label>
+                    <input value={email} type="email" name="email" style={error.email || formIsValid == false ? {
+                        border: 'solid 1px #791097',
+                        backgroundColor: 'rgba(236, 28, 36, 0.04)'
+                    } : null} className="form_div_ele" id="email" onChange={(e) => {
+                        handleChangeUserEmail(e)
+                    }} onBlur={(e) => {
+                        handleChangeUserEmail(e)
+                    }}/>
+                    {error.email ? errorMessage(<FormattedMessage id="validation.email"/>) : null}
+                </FormControl>
+
                 <FormControl>
                     <label className="form_div_label" htmlFor={"phone"}>
                         <FormattedMessage id="login.password"/>
@@ -131,7 +156,7 @@ const LoginForm = props => {
                 </FormControl>
                 <FormControl>
                     <button onClick={(e) => handleSubmit(e)} className="btn_confirm">
-                        <FormattedMessage id="startToday.formSection.login"/>
+                        <FormattedMessage id="login.register"/>
                         <ArrowForwardIosIcon style={{
                             color: '#ffffff',
                             fontSize: 'small',
@@ -150,19 +175,10 @@ const LoginForm = props => {
                             transform: locale == "en" ? null : 'scale(-1)'
                         }}/>
                     </button>
-                    <button onClick={(e) => history.push('/Register')} className="btn_confirm">
-                        <FormattedMessage id="login.register"/>
-                        <ArrowForwardIosIcon style={{
-                            color: '#ffffff',
-                            fontSize: 'small',
-                            marginInline: ' 0.27rem',
-                            transform: locale == "en" ? null : 'scale(-1)'
-                        }}/>
-                    </button>
                 </FormControl>
             </form>
         </div>
     )
 }
 
-export default LoginForm;
+export default RegisterForm;

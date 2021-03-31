@@ -15,7 +15,9 @@ export default {
 		status: 'إختار حالة',
 		allFields:'يجب ملء جميع الحقول\n',
 		username:'إدخل اسم المستخدم',
-		password:'إدخل كلمة المرور'
+		password:'إدخل كلمة المرور',
+		email:'إدخل بريدك الألكترونى'
+
 	},
 	services:{
 		headline:'لماذا Teleperformance؟\n' ,
@@ -28,12 +30,13 @@ export default {
 		social:'تابعنا على مواقع التواصل الأجتماعى\n'
 	},
 	login:{
+		register:'إنشاء حساب ' ,
 		login:'تسجيل الدخول',
 		username:'إسم المستخدم',
 		password:'كلمة المرور',
 		error:'اسم المستخدم أو كلمة المرور غير صحيحه',
-		welcome:'مرحبا'
-
+		welcome:'مرحبا',
+		email:' البريد الألكترونى'
 
 	},
 	startToday: {

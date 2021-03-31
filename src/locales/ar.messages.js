@@ -30,7 +30,11 @@ export default {
 	login:{
 		login:'تسجيل الدخول',
 		username:'إسم المستخدم',
-		password:'كلمة المرور'
+		password:'كلمة المرور',
+		error:'اسم المستخدم أو كلمة المرور غير صحيحه',
+		welcome:'مرحبا'
+
+
 	},
 	startToday: {
 		formSection:{

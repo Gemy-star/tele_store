@@ -24,7 +24,9 @@ export default {
 	login:{
 		login:'Sign In',
 		username:'Username',
-		password:'Password'
+		password:'Password',
+		error:'Username Or Password is not correct',
+		welcome:'WELCOME'
 	},
 	header: {
 		btn: 'العربيه',

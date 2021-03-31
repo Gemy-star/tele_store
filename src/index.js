@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import {LocalizationProvider} from "./context/LocalizationContext";
 import {BrowserRouter} from "react-router-dom";
 import {ProductsProvider} from "./context/ProductsContext";
+import {UserProvider} from "./context/UserContext";
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
           <ProductsProvider>
           <LocalizationProvider>
-          <App />
+              <UserProvider>
+                  <App />
+              </UserProvider>
           </LocalizationProvider>
           </ProductsProvider>
       </BrowserRouter>

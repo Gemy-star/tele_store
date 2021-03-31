@@ -1,5 +1,4 @@
-import axiosInstance, {baseURL} from '../axios/axiosInstance';
-const API_URL = 'api/products';
+import axiosInstance , {API_URL} from '../axios/axiosInstance';
 
 export const getAllProducts = () =>   {
     return axiosInstance.get(API_URL)

@@ -5,9 +5,13 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import './_loginForm.scss';
 import {LocalizationContext} from "../../context/LocalizationContext";
 import {useHistory} from "react-router";
+import {login} from "../../api/LoginApi";
+import {UserContext} from "../../context/UserContext";
+import {ToastsContainer, ToastsStore} from 'react-toasts';
 
 
 const LoginForm = props => {
+    const [user, setUser] = useContext(UserContext);
     const history = useHistory();
     const [error, setError] = useState({username: false, password: false})
     const [password, setPassword] = useState('');
@@ -40,7 +44,20 @@ const LoginForm = props => {
         }
     };
     const handlePostRequest = (body) => {
-        console.log(body);
+       login(body).then(res => {
+           if (res?.status == 200) {
+                   const user = {username:body.username , token:res?.data?.token};
+                   setUser(user);
+                   localStorage.setItem('token' , res?.data?.token)
+               console.log("Login",res);
+                   history.push('/products');
+           }else {
+               console.log(res);
+               ToastsStore.error(<FormattedMessage id="login.error"/>)
+           }
+       } , err => {
+           console.log(err);
+       })
     };
     const handleChangeUserName = event => {
         const username = event.target.value;
@@ -82,7 +99,7 @@ const LoginForm = props => {
                     <label className="form_div_label" htmlFor={"car_model"}>
                         <FormattedMessage id="login.username"/>
                     </label>
-                    <input value={name} type="text" name="username" style={error.fullName || formIsValid == false ? {
+                    <input value={name} type="text" name="username" style={error.username || formIsValid == false ? {
                         border: 'solid 1px #791097',
                         backgroundColor: 'rgba(236, 28, 36, 0.04)'
                     } : null} className="form_div_ele" id="username" onChange={(e) => {
@@ -128,6 +145,7 @@ const LoginForm = props => {
                         }}/>
                     </button>
                 </FormControl>
+                <ToastsContainer store={ToastsStore}/>
             </form>
         </div>
     )

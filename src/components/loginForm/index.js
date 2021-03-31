@@ -37,7 +37,7 @@ const LoginForm = props => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (formIsValid && !error.username && !error.password) {
+        if (formIsValid) {
             handlePostRequest({username: name, password: password})
         } else {
             setFormIsValid(false);

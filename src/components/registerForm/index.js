@@ -38,14 +38,13 @@ const RegisterForm = props => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (formIsValid && !error.username && !error.password && !error.email) {
+        if (formIsValid) {
             handlePostRequest({username: name, password: password , email:email})
         } else {
             setFormIsValid(false);
         }
     };
     const handlePostRequest = (body) => {
-
         register(body).then(res => {
             if (res?.status == 200 ) {
                 history.push('/Login');

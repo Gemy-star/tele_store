@@ -49,7 +49,7 @@ const AddEditForm = () => {
     };
     const handleSubmit = (event) =>  {
         event.preventDefault();
-        if(formIsValid && !error.name && !error.status && !error.details) {
+        if(formIsValid) {
             handlePostRequest({name:name_new , status:status_new , description:detials_new})
         }else {
             setFormIsValid(false);

@@ -46,9 +46,8 @@ const LoginForm = props => {
     const handlePostRequest = (body) => {
        login(body).then(res => {
            if (res?.status == 200) {
-                   const user = {username:body.username , token:res?.data?.token};
-                   setUser(user);
-                   localStorage.setItem('token' , res?.data?.token)
+                   setUser(res?.data);
+                   localStorage.setItem('user' , res?.data)
                toast.success(locale=="en" ? "Sucess" : "نجحت", {
                    position: toast.POSITION.TOP_CENTER
                });

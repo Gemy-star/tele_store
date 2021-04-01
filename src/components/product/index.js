@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import './_product.scss';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {deleteProduct} from "../../api/ProductsCRUD";
 import {useHistory} from "react-router";
+import {UserContext} from "../../context/UserContext";
 const Product = ({id, title , subtitle}) =>  {
+    const [user , setUser] = useContext(UserContext);
+
     const history = useHistory();
     const handleEdit = () => {
        history.push(`/AddEdit/${id}`);
@@ -27,11 +30,15 @@ const Product = ({id, title , subtitle}) =>  {
 
                 </div>
             </div>
-            <div className="service_card_control">
-                <CreateIcon className="service_card_control_edit" onClick={() => handleEdit(id)}/>
-                <DeleteIcon className="service_card_control_delete" onClick={() => handleDelete(id)}/>
 
-            </div>
+
+            {user.role[0] === "Admin" ?
+                <div className="service_card_control">
+                    <CreateIcon className="service_card_control_edit" onClick={() => handleEdit(id)}/>
+                    <DeleteIcon className="service_card_control_delete" onClick={() => handleDelete(id)}/>
+                </div>:null
+                }
+
 
         </div>
     )

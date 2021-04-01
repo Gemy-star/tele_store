@@ -2,7 +2,6 @@ import axiosInstance, {API_URL} from "../axios/axiosInstance";
 
 
 export const login = (body) =>   {
-    console.log("Login",body);
     return axiosInstance.post(`${API_URL}/login`, body )
 }
 

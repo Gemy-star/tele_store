@@ -13,13 +13,13 @@ const Products = props =>  {
     const history = useHistory();
     const [products , setProduct] = useContext(ProductContext)
     const [user , setUser] = useContext(UserContext);
-
+    const userInfo = localStorage.getItem("user");
  console.log( "USER", user)
     return (
         <section className="services">
             <div className="services_container">
                 <div className="services_container_title">
-                    <h3> <FormattedMessage id="login.welcome" /> {user.user.userName}</h3>
+                    <h3> <FormattedMessage id="login.welcome" /> {user.user.userName ? user.user.userName : userInfo?.user.userName}</h3>
                     <button onClick={()=> history.push('/AddEdit')} ><ControlPointIcon className="icon" /></button>
                 </div>
                 <div className="services_container_grid">

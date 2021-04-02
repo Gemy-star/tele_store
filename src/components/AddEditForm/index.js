@@ -41,10 +41,10 @@ const AddEditForm = () => {
     };
     const handleChangeStatus = (event) =>  {
         if(event.type===   "blur") {
-            event.target.value ===   "0" ? setError({...error , status:true}):setError({...error , status:false})
+            event.target.value !=   "0" || event.target.value != "1" ? setError({...error , status:true}):setError({...error , status:false})
         }
         const status = event.target.value;
-        status ===    null ? setError({...error , status:true}):setError({...error , status:false})
+        event.target.value !=   "0" || event.target.value != "1" ? setError({...error , status:true}):setError({...error , status:false})
         setStatus_new(status=== "0" ? false : true);
     };
     const handleSubmit = (event) =>  {
@@ -67,7 +67,6 @@ const AddEditForm = () => {
     },[id])
     const handlePostRequest = async  (body) => {
         if (id) {
-            alert('update');
             try {
               await updateProduct(id,body).then((res) => {
                     console.log(res);
@@ -82,7 +81,6 @@ const AddEditForm = () => {
             }
 
         }else {
-            alert('create');
             try {
                 await createProduct(body).then((res) => {
                     if (res.status == 200) {
@@ -126,9 +124,9 @@ const AddEditForm = () => {
         }
         else {
             setError({...error , details:false})
+            setDetails_new(details);
 
         }
-        setDetails_new(details);
     };
     return(
         <section>
@@ -155,12 +153,8 @@ const AddEditForm = () => {
                             <option disabled selected>
                                 {locale == "en" ? "SELECT A Status" : "إختار حالة"}
                             </option>
-                            <option onClick={(e) => {
-                                handleChangeStatus(e)
-                            }} value={"1"}>{locale == "en" ? "Active" : "نشط"}</option>
-                            <option onClick={(e) => {
-                                handleChangeStatus(e)
-                            }} value={"0"}>{locale == "en" ? "Not Active" : "غير نشط"}</option>
+                            <option value={"1"}>{locale == "en" ? "Active" : "نشط"}</option>
+                            <option value={"0"}>{locale == "en" ? "Not Active" : "غير نشط"}</option>
 
 
                         </select>

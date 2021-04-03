@@ -8,7 +8,6 @@ export const getProductById = (id) =>   {
 }
 
 export const createProduct = (body) =>   {
-console.log("SARA",body);
       return axiosInstance.post(API_URL, body )
 }
 

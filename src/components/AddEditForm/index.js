@@ -17,6 +17,8 @@ const AddEditForm = () => {
     const [name_new, setName_new] = useState('');
     const [detials_new, setDetails_new] = useState('');
     const [item ,setItem] = useState({});
+    const [imageFile ,setImageFile] = useState('');
+    const [imageSrc , setImageSrc ] = useState('');
     const [error , setError] = useState({status:false , name:false , details:false })
     useEffect(()=> {
        if (id) {
@@ -50,7 +52,7 @@ const AddEditForm = () => {
     const handleSubmit = (event) =>  {
         event.preventDefault();
         if(formIsValid) {
-            handlePostRequest({name:name_new , status:status_new , description:detials_new})
+            handlePostRequest({name:name_new , status:status_new , description:detials_new , imageFile:imageFile , imageSrc:imageSrc})
         }else {
             setFormIsValid(false);
         }
@@ -66,9 +68,17 @@ const AddEditForm = () => {
         }
     },[id])
     const handlePostRequest = async  (body) => {
+        const formData = new FormData()
+        formData.append('name', body.name)
+        formData.append('status', body.status)
+        formData.append('description', body.description)
+        formData.append('imageSrc', body.imageSrc)
+        formData.append('imageFile', body.imageFile)
         if (id) {
             try {
-              await updateProduct(id,body).then((res) => {
+                formData.append('Id',id)
+
+                await updateProduct(id,formData).then((res) => {
                     console.log(res);
                     if (res.status == 200) {
                         history.push('/products');
@@ -82,7 +92,7 @@ const AddEditForm = () => {
 
         }else {
             try {
-                await createProduct(body).then((res) => {
+                await createProduct(formData).then((res) => {
                     if (res.status == 200) {
                         history.push('/products');
                     }
@@ -128,16 +138,39 @@ const AddEditForm = () => {
 
         }
     };
+    const showPreview = e => {
+        if (e.target.files && e.target.files[0]) {
+            let imageFile = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = x => {
+       setImageFile(imageFile);
+    setImageSrc (x.target.result)
+
+            }
+            reader.readAsDataURL(imageFile)
+        }
+
+    }
+
     return(
         <section>
             <div className="form_div">
-                <form encType="multipart/form-data" method="POST">
+                <form encType="multipart/form-data" method="POST" onSubmit={(e)=> handleSubmit(e)}>
                     {formIsValid == null || formIsValid == true ? null :
                         <div className="error_div" style={{justifyContent: 'flex-start'}}>
                             <p className="error_div_msg" style={{marginInline: '1rem'}}>
                                 <FormattedMessage id="validation.allFields"/>
                             </p>
                         </div>}
+                        <FormControl>
+                            <img src={imageSrc} className="card-img-top" />
+                            <div className="card-body">
+                                <div className="form-group">
+                                    <input  type="file" accept="image/*" className={locale == "en" ? "form_div_ele form_div_selectEn" : "form_div_ele form_div_selectAr"}
+                                           onChange={showPreview} id="image-uploader" />
+                                </div>
+                            </div>
+                        </FormControl>
                     <FormControl>
                         <label className="form_div_label" htmlFor={"status"}>
                             <FormattedMessage id="startToday.formSection.secondLabel"/>
@@ -191,7 +224,7 @@ const AddEditForm = () => {
                         {error.details ? errorMessage(<FormattedMessage id="validation.details"/>) : null}
                     </FormControl>
                     <FormControl style={{display: 'inline-block'}}>
-                        <button onClick={(e) => handleSubmit(e)} className="btn_confirm">
+                        <button type="submit" onClick={(e) => handleSubmit(e)} className="btn_confirm">
                             {id > 0  ? <FormattedMessage id="startToday.formSection.editBtn"/>:<FormattedMessage id="startToday.formSection.sendBtn"/>}
                             <ArrowForwardIosIcon style={{
                                 color: '#ffffff',

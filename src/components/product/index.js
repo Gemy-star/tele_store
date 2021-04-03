@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {deleteProduct} from "../../api/ProductsCRUD";
 import {useHistory} from "react-router";
 import {UserContext} from "../../context/UserContext";
-const Product = ({id, title , subtitle}) =>  {
+const Product = ({id, title , subtitle , imgaeName , imageSrc}) =>  {
     const [user , setUser] = useContext(UserContext);
 
     const history = useHistory();
@@ -23,6 +23,7 @@ const Product = ({id, title , subtitle}) =>  {
         })    };
     return(
         <div className="service_card">
+            <img src={imageSrc} className="service_card_item_img" alt={imgaeName}/>
             <div className="service_card_item">
                 <div className="service_card_item_content">
                     <h3>{title}  </h3>
